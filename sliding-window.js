@@ -43,4 +43,21 @@ function minSumSubArray(arr, k) {
     }
     return sum
 }
-console.log("sliding window min sum", minSumSubArray([2, 1, 5, 1, 3, 2], 3))
+console.log("Sliding window min sum", minSumSubArray([2, 1, 5, 1, 3, 2], 3))
+
+function minSubArraySum(arr, s) {
+    let windowSum = 0, minSubArrayLength = arr.length, windowStart = 0;
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        windowSum += arr[windowEnd];
+
+        while (windowSum >= s) {
+            minSubArrayLength = Math.min(minSubArrayLength, windowEnd - windowStart + 1);
+            windowSum -= arr[windowStart]
+            windowStart++;
+        }
+    }
+
+    return minSubArrayLength
+}
+
+console.log("Sliding window min subarry sum", minSubArraySum([2, 1, 5, 1, 3, 2], 5))
