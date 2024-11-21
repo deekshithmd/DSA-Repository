@@ -69,3 +69,24 @@ function removeElement(arr, key) {
 }
 
 console.log('remove element', removeElement([1, 2, 4, 4, 5, 3, 4, 4, 4, 4], 4))
+
+function squaresOfSortedArray(arr) {
+    const l = arr.length, squares = Array(l).fill(0);
+    let start = 0, end = l - 1, highestSquareIndex = l - 1;
+    while (start < end) {
+        const startSquare = arr[start] * arr[start];
+        const endSquare = arr[end] * arr[end];
+        if (startSquare > endSquare) {
+            squares[highestSquareIndex] = startSquare;
+            start++;
+        }
+        else {
+            squares[highestSquareIndex] = endSquare;
+            end--;
+        }
+        highestSquareIndex--;
+    }
+    return squares
+}
+
+console.log('sorted array', squaresOfSortedArray([-2, -1, 0, 1, 2, 3]))
