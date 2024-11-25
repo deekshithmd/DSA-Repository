@@ -125,3 +125,46 @@ head.next.next.next.next.next = new Node(6)
 head.next.next.next.next.next.next = head.next.next;
 
 console.log('Cycle start', findCycleStart(head))
+
+// Find happy number i.e sum of digits equal to 0
+function findHappyNumber(num) {
+    let slow = num, fast = num;
+    while (true) {
+        slow = findSum(slow);
+        fast = findSum(findSum(fast));
+        if (slow == fast) {
+            break;
+        }
+    }
+    return slow == 1;
+}
+function findSum(num) {
+    let sum = 0;
+    while (num > 0) {
+        let digit = num % 10;
+        sum += digit * digit;
+        num = Math.floor(num / 10)
+    }
+    return sum
+}
+
+console.log('Is happy number', findHappyNumber(23));
+
+// Find middle of linkedlist
+function findMiddleOfLinkedlist(head) {
+    let slow = head, fast = head;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow.value;
+}
+
+head = new Node(1)
+head.next = new Node(2);
+head.next.next = new Node(3);
+head.next.next.next = new Node(4)
+head.next.next.next.next = new Node(5)
+head.next.next.next.next.next = new Node(6)
+head.next.next.next.next.next.next = new Node(7)
+console.log('Middle of linkedlist', findMiddleOfLinkedlist(head))
