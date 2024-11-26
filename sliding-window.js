@@ -19,15 +19,25 @@
 // console.log("Bruteforce",maxSumSubArray([2, 1, 5, 1, 3, 2], 3))
 // Sliding window
 function maxSumSubArray(arr, n) {
-    let sum = 0, windowSum = 0;
-    for (let i = 0; i < n; i++) {
-        windowSum += arr[i]
+    // let sum = 0, windowSum = 0;
+    // for (let i = 0; i < n; i++) {
+    //     windowSum += arr[i]
+    // }
+    // for (let i = n; i < arr.length; i++) {
+    //     windowSum += arr[i] - arr[i - n]
+    //     sum = Math.max(windowSum, sum)
+    // }
+    // return sum
+    let windowSum = 0, maxSum = 0, start = 0;
+    for (let end = 0; end < arr.length; end++) {
+        windowSum += arr[end];
+        if (end >= n - 1) {
+            maxSum = Math.max(windowSum, maxSum);
+            windowSum -= arr[start];
+            start++;
+        }
     }
-    for (let i = n; i < arr.length; i++) {
-        windowSum += arr[i] - arr[i - n]
-        sum = Math.max(windowSum, sum)
-    }
-    return sum
+    return maxSum;
 }
 console.log("Sliding window max sum", maxSumSubArray([2, 1, 5, 1, 3, 2], 3))
 
@@ -60,4 +70,4 @@ function minSubArraySum(arr, s) {
     return minSubArrayLength
 }
 
-console.log("Sliding window min subarry sum", minSubArraySum([2, 1, 5, 1, 3, 2], 5))
+console.log("Sliding window min subarry sum", minSubArraySum([2, 1, 5, 1, 3, 2], 6))
