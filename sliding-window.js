@@ -71,3 +71,18 @@ function minSubArraySum(arr, s) {
 }
 
 console.log("Sliding window min subarry sum", minSubArraySum([2, 1, 5, 1, 3, 2], 6))
+
+function longestSubstringWithKDistinct(str, k) {
+    let charactersObj = {}, windowStart = 0, maxLength = str.length;
+    for (let windowEnd = 0; windowEnd < str.length; windowEnd++) {
+        if (!(str[windowEnd] in charactersObj)) {
+            charactersObj[str[windowEnd]] = 1
+        }
+        charactersObj[str[windowEnd]]++;
+        while (Object.keys(charactersObj) > k) {
+
+        }
+    }
+}
+
+console.log('Longest substring with k distinct characters', longestSubstringWithKDistinct('araaci', 2))
