@@ -72,17 +72,49 @@ function minSubArraySum(arr, s) {
 
 console.log("Sliding window min subarry sum", minSubArraySum([2, 1, 5, 1, 3, 2], 6))
 
+//longest substring with k distinct characters
 function longestSubstringWithKDistinct(str, k) {
-    let charactersObj = {}, windowStart = 0, maxLength = str.length;
+    let charactersObj = {}, windowStart = 0, maxLength = 0;
     for (let windowEnd = 0; windowEnd < str.length; windowEnd++) {
         if (!(str[windowEnd] in charactersObj)) {
-            charactersObj[str[windowEnd]] = 1
+            charactersObj[str[windowEnd]] = 0
         }
         charactersObj[str[windowEnd]]++;
         while (Object.keys(charactersObj) > k) {
-
+            charactersObj[str[windowStart]]--;
+            if (charactersObj[str[windowStart]] === 0) {
+                delete charactersObj[str[windowStart]];
+            }
+            windowStart++;
         }
+        maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
     }
+    return maxLength;
 }
 
 console.log('Longest substring with k distinct characters', longestSubstringWithKDistinct('araaci', 2))
+
+// fruits into basket (longest subarray with 2 distinct characters)
+
+function fruitsIntoBasket(arr) {
+    let charactersObj = {}, windowStart = 0, maxCount = 0;;
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        if (!(arr[windowEnd] in charactersObj)) {
+            charactersObj[arr[windowEnd]] = 0;
+        }
+        charactersObj[arr[windowEnd]]++;
+        while (Object.keys(charactersObj)?.length > 2) {
+            charactersObj[arr[windowStart]]--;
+            if (charactersObj[arr[windowStart]] === 0) {
+                delete charactersObj[arr[windowStart]]
+            }
+            windowStart++;
+        }
+        maxCount = Math.max(maxCount, windowEnd - windowStart + 1)
+    }
+    //console.log(charactersObj)
+    return maxCount;
+
+}
+
+console.log('Fruits into basket...', fruitsIntoBasket([3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4]))
