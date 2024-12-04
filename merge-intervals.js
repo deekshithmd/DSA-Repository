@@ -77,8 +77,48 @@ function intersectionOfIntervals(firstIntervals, secondIntervals) {
     let result = [], i = 0, j = 0;
 
     while (i < firstIntervals.length && j < secondIntervals.length) {
-        firstOverlappesSecond = firstIntervals[i][0] >= secondIntervals[j][0] && firstIntervals[i][1] <= secondIntervals[j][1]
+        firstOverlapsSecond = firstIntervals[i][0] >= secondIntervals[j][0] && firstIntervals[i][0] <= secondIntervals[j][1];
+        secondOverlapsFirst = firstIntervals[i][0] <= secondIntervals[j][0] && firstIntervals[i][1] >= secondIntervals[j][0];
+
+        if (firstOverlapsSecond || secondOverlapsFirst) {
+            const out = [Math.max(firstIntervals[i][0], secondIntervals[j][0]), Math.min(firstIntervals[i][1], secondIntervals[j][1])]
+            result.push(out)
+        }
+        if (firstIntervals[i][1] > secondIntervals[j][1]) {
+            j++
+        }
+        else {
+            i++
+        }
     }
+    return result
+    // while (i < firstIntervals.length && j < secondIntervals.length) {
+    //     checkForOverlap = (firstIntervals[i][0] <= secondIntervals[j][0] && firstIntervals[i][1] >= secondIntervals[j][0]) || (firstIntervals[i][0] >= secondIntervals[j][0] && firstIntervals[i][0] <= secondIntervals[j][1])
+
+    //     if (checkForOverlap) {
+    //         result.push([Math.max(firstIntervals[i][0], secondIntervals[j][0]), Math.min(firstIntervals[i][1], secondIntervals[j][1])])
+    //     }
+    //     if (firstIntervals[i][1] > secondIntervals[j][1]) {
+    //         j++;
+    //     } else {
+    //         i++
+    //     }
+    // }
+    // return result
 }
 
 console.log('Intersection of intervals...', intersectionOfIntervals([[1, 3], [5, 6], [7, 9]], [[2, 3], [5, 7]]))
+
+// conflicting appointments
+function findConflictingAppointments(intervals) {
+    intervals.sort((a, b) => a[0] - b[0])
+    for (let i = 1; i < intervals.length; i++) {
+        if (intervals[i - 1][1] > intervals[i][0]) {
+            return false
+        }
+    }
+    return true
+}
+
+console.log('Can person attend all appointments', findConflictingAppointments([[1, 4], [2, 5], [7, 9]]))
+console.log('Can person attend all appointments', findConflictingAppointments([[6, 7], [2, 4], [8, 12]]))
